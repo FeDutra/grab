@@ -1,6 +1,10 @@
 name: Build Release
 
 on:
+  push:
+    branches:
+      - main
+      - master
   workflow_dispatch:
 
 jobs:
@@ -38,6 +42,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: v1.0.0
-          releaseName: 'GRAB for Windows'
+          releaseName: 'GRAB v1.0.0'
           releaseDraft: false
           prerelease: false
