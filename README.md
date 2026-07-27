@@ -1,32 +1,39 @@
-# React + TypeScript + Vite
+<div align="center">
+  <br />
+  <h1><code>[ grab ]</code> <span style="opacity: 0.7; font-size: 0.7em; margin-left: 10px;">by <strong>PULSO</strong></span></h1>
+  <p><strong>download de vídeos e áudios</strong></p>
+  <br />
+</div>
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+> Uma ferramenta minimalista, assíncrona e brutalmente eficiente para baixar vídeos, áudios e playlists em altíssima qualidade. Construída com o motor poderoso do `yt-dlp` e a precisão audiovisual do `ffmpeg`, encapsulada numa interface que respira o design da PULSO.
 
-Currently, two official plugins are available:
+## ⚡ Recursos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Concorrência Real:** Baixe múltiplos links ao mesmo tempo. Cole, clique e deixe a esteira trabalhar.
+- **Qualidade Sem Perdas:** Modo `[ máxima ]` aciona o FFmpeg invisível para costurar as melhores faixas de vídeo e áudio nativas da plataforma original.
+- **Multiplataforma Nativa:** Suporta YouTube, Instagram, TikTok, Twitter (X) e centenas de outros portais. Tudo na mesma caixa de texto.
+- **Identidade Visual:** Monocromático, luzes pulsantes, micro-interações de vidro e tipografia mono-espaçada. Menos ruído, mais foco.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📥 Como Instalar e Usar
 
-## Expanding the Oxlint configuration
+O GRAB é autossuficiente. Não requer instalação de Python, nem uso de terminal. Baixou, clicou, usou.
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+### 🍏 Mac (.dmg)
+1. Vá na aba [Releases](../../releases) aqui no GitHub.
+2. Baixe o arquivo `.dmg`.
+3. Abra o arquivo e arraste o GRAB para a pasta Aplicativos.
+> **Aviso de Segurança:** Por ser um app independente (Open Source), a Apple pode bloqueá-lo na primeira vez. Para abrir, vá na pasta Aplicativos, clique nele com o **Botão Direito -> Abrir** e confirme. (Ou use `xattr -cr /Applications/grab.app` no Terminal).
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+### 🪟 Windows (.exe)
+1. Vá na aba [Releases](../../releases) aqui no GitHub.
+2. Baixe o arquivo `.exe`.
+3. Dê dois cliques e use!
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+---
+
+<div align="center">
+  <br />
+  <p>criado com atenção aos detalhes por <strong>PULSO</strong>.</p>
+</div>
