@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --font-sans: var(--font-inter);
+  --font-outfit: var(--font-outfit);
+}
+
+:root {
+  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-outfit: 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --background: #050505; /* Deep black/dark grey from screenshots */
+  --foreground: #f8fafc;
+  
+  --text-primary: #e5e5e5;
+  --text-secondary: #a3a3a3;
+  --text-muted: #525252;
+  --text-on-glass: #e5e5e5;
+  
+  /* Atelier / Terminal Tokens */
+  --glass-bg: rgba(10, 10, 10, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-shadow: rgba(0, 0, 0, 0.5);
+  --glass-reflection: transparent;
+}
+
+[data-theme='dark'] {
+  --background: #050505;
+  --text-primary: #e5e5e5;
+  --text-secondary: #a3a3a3;
+  --text-muted: #525252;
+  --text-on-glass: #e5e5e5;
+  
+  --glass-bg: rgba(10, 10, 10, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-shadow: rgba(0, 0, 0, 0.5);
+  --glass-reflection: transparent;
+}
+
+body {
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-mono); /* Force monospace for the terminal feel */
+  letter-spacing: 0.05em;
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Minimalist Atelier Panels */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 40px -10px var(--glass-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-interactive:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.glass-glow {
+  position: relative;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* No Scrollbar Utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Contrast Utilities */
+.text-contrast-high {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Organic Breathing / Floating animations for Lótus HTML Div Shape */
+@keyframes organic-breathe {
+  0%, 100% {
+    border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 19px rgba(251, 249, 245, 0.2));
+  }
+  33% {
+    border-radius: 54% 46% 52% 48% / 48% 53% 47% 52%;
+    transform: scale(1.02) rotate(1.5deg);
+    filter: drop-shadow(0 0 34px rgba(251, 249, 245, 0.3));
+  }
+  66% {
+    border-radius: 47% 53% 48% 52% / 53% 47% 53% 47%;
+    transform: scale(0.98) rotate(-1.5deg);
+    filter: drop-shadow(0 0 24px rgba(251, 249, 245, 0.25));
+  }
+}
+
+.lotus-idle-anim {
+  animation: organic-breathe 7s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* PULSO IDENTITY - GLOBAL TRANSITIONS & ANIMATIONS */
+.pulso-transition {
+  transition: opacity 1000ms cubic-bezier(0.4, 0, 0.2, 1),
+              filter 1000ms cubic-bezier(0.4, 0, 0.2, 1),
+              transform 1000ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes pulso-mount-up {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-pulso-mount {
+  animation: pulso-mount-up 1000ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Pulso Text Glow */
+.text-glow {
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 0 0 16px rgba(255, 255, 255, 0.3);
+  animation: text-pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes text-pulse-glow {
+  0%, 100% { 
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.4), 0 0 12px rgba(255, 255, 255, 0.2);
+    opacity: 0.85;
+  }
+  50% { 
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
+    opacity: 1;
+  }
+}
