@@ -1,12 +1,12 @@
 <div align="center">
   <br />
   <h1><code>[ grab ]</code> <span style="opacity: 0.7; font-size: 0.7em; margin-left: 10px;">by <strong>PULSO</strong></span></h1>
-  <p><strong>[ download de vídeos e áudios ]</strong></p>
+  <p><strong>[ download de vídeos, áudios e transcrições ]</strong></p>
   <br />
 </div>
 
 > simples, silencioso e brutalmente eficiente.
-> você cola o link. o grab devolve o arquivo, sem perdas, sem complicações.
+> você cola o link. o grab devolve o arquivo (ou o texto falado), sem perdas, sem complicações.
 
 <br />
 
@@ -14,6 +14,7 @@
 
 - **[ concorrência ]** baixe vários links ao mesmo tempo. a esteira não para.
 - **[ máxima ]** qualidade original, sem compressão (áudio e vídeo unidos nativamente via ffmpeg).
+- **[ inteligência ]** transcreve áudios offline gerando textos pontuados e legendas (via whisper.cpp).
 - **[ universal ]** youtube, instagram, tiktok, x (twitter) e playlists inteiras.
 - **[ interface ]** luzes, estética dark, sem ruído. direto ao ponto.
 
