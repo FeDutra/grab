@@ -1,39 +1,55 @@
 <div align="center">
   <br />
   <h1><code>[ grab ]</code> <span style="opacity: 0.7; font-size: 0.7em; margin-left: 10px;">by <strong>PULSO</strong></span></h1>
-  <p><strong>download de vídeos e áudios</strong></p>
+  <p><strong>[ download de vídeos e áudios ]</strong></p>
   <br />
 </div>
 
-> Uma ferramenta minimalista, assíncrona e brutalmente eficiente para baixar vídeos, áudios e playlists em altíssima qualidade. Construída com o motor poderoso do `yt-dlp` e a precisão audiovisual do `ffmpeg`, encapsulada numa interface que respira o design da PULSO.
+> uma esteira de extração audiovisual brutalmente silenciosa. 
+> você entrega o link. o grab devolve a essência, sem perdas, sem barreiras.
 
-## ⚡ Recursos
+<br />
 
-- **Concorrência Real:** Baixe múltiplos links ao mesmo tempo. Cole, clique e deixe a esteira trabalhar.
-- **Qualidade Sem Perdas:** Modo `[ máxima ]` aciona o FFmpeg invisível para costurar as melhores faixas de vídeo e áudio nativas da plataforma original.
-- **Multiplataforma Nativa:** Suporta YouTube, Instagram, TikTok, Twitter (X) e centenas de outros portais. Tudo na mesma caixa de texto.
-- **Identidade Visual:** Monocromático, luzes pulsantes, micro-interações de vidro e tipografia mono-espaçada. Menos ruído, mais foco.
+### [ mecanismo ]
 
----
+- **[ concorrência ]** múltiplos fluxos simultâneos. a esteira não para.
+- **[ máxima ]** costura cirúrgica de áudio e vídeo na mais alta resolução nativa (motorizado por ffmpeg).
+- **[ universal ]** youtube, instagram, tiktok, x, playlists inteiras. o algoritmo entende.
+- **[ interface ]** luzes pulsantes, ausência de ruído visual. apenas o necessário.
 
-## 📥 Como Instalar e Usar
+<br />
 
-O GRAB é autossuficiente. Não requer instalação de Python, nem uso de terminal. Baixou, clicou, usou.
+### [ extrair ]
 
-### 🍏 Mac (.dmg)
-1. Vá na aba [Releases](../../releases) aqui no GitHub.
-2. Baixe o arquivo `.dmg`.
-3. Abra o arquivo e arraste o GRAB para a pasta Aplicativos.
-> **Aviso de Segurança:** Por ser um app independente (Open Source), a Apple pode bloqueá-lo na primeira vez. Para abrir, vá na pasta Aplicativos, clique nele com o **Botão Direito -> Abrir** e confirme. (Ou use `xattr -cr /Applications/grab.app` no Terminal).
+o grab é autossuficiente. tudo que ele precisa para operar já vive dentro dele.
 
-### 🪟 Windows (.exe)
-1. Vá na aba [Releases](../../releases) aqui no GitHub.
-2. Baixe o arquivo `.exe`.
-3. Dê dois cliques e use!
+**[ mac / .dmg ]**
+1. encontre o `grab_x64.dmg` nas [ releases ](../../releases).
+2. extraia para sua máquina (pasta aplicativos).
+> *a maçã vai questionar a origem. ignore. clique com o [ botão direito > abrir ] na primeira execução, ou silencie o sistema via terminal: `xattr -cr /Applications/grab.app`*
+
+**[ windows / .exe ]**
+1. encontre o `GRAB-Windows.exe` nas [ releases ](../../releases).
+2. execute. a esteira estará pronta.
+
+<br />
+
+### [ arquitetura interna ]
+
+para quem deseja olhar sob o capô:
+
+```bash
+[ 1 ] git clone https://github.com/SEU_USUARIO/grab.git
+[ 2 ] npm install
+[ 3 ] npm run tauri dev
+```
+*(o oxigênio da ferramenta exige os binários do yt-dlp e ffmpeg ancorados internamente nas rotas de resources).*
+
+<br />
 
 ---
 
 <div align="center">
   <br />
-  <p>criado com atenção aos detalhes por <strong>PULSO</strong>.</p>
+  <p>projetado no escuro por <strong>PULSO</strong>.</p>
 </div>
