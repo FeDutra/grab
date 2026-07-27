@@ -5,45 +5,45 @@
   <br />
 </div>
 
-> uma esteira de extração audiovisual brutalmente silenciosa. 
-> você entrega o link. o grab devolve a essência, sem perdas, sem barreiras.
+> simples, silencioso e brutalmente eficiente.
+> você cola o link. o grab devolve o arquivo, sem perdas, sem complicações.
 
 <br />
 
-### [ mecanismo ]
+### [ motor ]
 
-- **[ concorrência ]** múltiplos fluxos simultâneos. a esteira não para.
-- **[ máxima ]** costura cirúrgica de áudio e vídeo na mais alta resolução nativa (motorizado por ffmpeg).
-- **[ universal ]** youtube, instagram, tiktok, x, playlists inteiras. o algoritmo entende.
-- **[ interface ]** luzes pulsantes, ausência de ruído visual. apenas o necessário.
+- **[ concorrência ]** baixe vários links ao mesmo tempo. a esteira não para.
+- **[ máxima ]** qualidade original, sem compressão (áudio e vídeo unidos nativamente via ffmpeg).
+- **[ universal ]** youtube, instagram, tiktok, x (twitter) e playlists inteiras.
+- **[ interface ]** luzes, estética dark, sem ruído. direto ao ponto.
 
 <br />
 
-### [ extrair ]
+### [ download ]
 
-o grab é autossuficiente. tudo que ele precisa para operar já vive dentro dele.
+o grab já vem com tudo que precisa dentro dele. não precisa instalar nada extra.
 
 **[ mac / .dmg ]**
-1. encontre o `grab_x64.dmg` nas [ releases ](../../releases).
-2. extraia para sua máquina (pasta aplicativos).
-> *a maçã vai questionar a origem. ignore. clique com o [ botão direito > abrir ] na primeira execução, ou silencie o sistema via terminal: `xattr -cr /Applications/grab.app`*
+1. baixe o arquivo `.dmg` na aba [ releases ](../../releases).
+2. arraste o ícone para a pasta aplicativos.
+> *o mac bloqueia apps não-oficiais na primeira vez. para abrir, vá na pasta aplicativos, clique no app com o [ botão direito > abrir ] e confirme. se ele disser que está danificado, abra o terminal e rode:* `xattr -cr /Applications/grab.app`
 
 **[ windows / .exe ]**
-1. encontre o `GRAB-Windows.exe` nas [ releases ](../../releases).
-2. execute. a esteira estará pronta.
+1. baixe o arquivo `.exe` na aba [ releases ](../../releases).
+2. clique duas vezes e use.
 
 <br />
 
-### [ arquitetura interna ]
+### [ código ]
 
-para quem deseja olhar sob o capô:
+se quiser rodar a versão de desenvolvimento:
 
 ```bash
 [ 1 ] git clone https://github.com/SEU_USUARIO/grab.git
 [ 2 ] npm install
 [ 3 ] npm run tauri dev
 ```
-*(o oxigênio da ferramenta exige os binários do yt-dlp e ffmpeg ancorados internamente nas rotas de resources).*
+*(o projeto usa yt-dlp e ffmpeg na pasta resources para funcionar).*
 
 <br />
 
@@ -51,5 +51,5 @@ para quem deseja olhar sob o capô:
 
 <div align="center">
   <br />
-  <p>projetado no escuro por <strong>PULSO</strong>.</p>
+  <p>projetado pela <strong>PULSO</strong>.</p>
 </div>
