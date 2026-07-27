@@ -25,13 +25,11 @@ jobs:
       - name: Baixar Motores para Windows
         shell: pwsh
         run: |
-          mkdir -p src-tauri/binaries
-          mkdir -p src-tauri/resources
           Invoke-WebRequest -Uri https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe -OutFile src-tauri/binaries/yt-dlp-x86_64-pc-windows-msvc.exe
           Invoke-WebRequest -Uri https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip -OutFile ffmpeg.zip
-          Expand-Archive ffmpeg.zip -DestinationPath ffmpeg_extracted
+          Expand-Archive ffmpeg.zip -DestinationPath ffmpeg_extracted -Force
           $ffmpegPath = Get-ChildItem -Path ffmpeg_extracted -Filter "ffmpeg.exe" -Recurse | Select-Object -First 1
-          Copy-Item $ffmpegPath.FullName -Destination src-tauri/resources/ffmpeg.exe
+          Copy-Item $ffmpegPath.FullName -Destination src-tauri/resources/ffmpeg.exe -Force
 
       - name: Instalar Dependências
         run: npm install
