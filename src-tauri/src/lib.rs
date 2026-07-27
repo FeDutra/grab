@@ -182,6 +182,7 @@ async fn start_download(app: AppHandle, state: State<'_, AppState>, id: String, 
                     let w_args = vec![
                         "-m".to_string(), model_path,
                         "-f".to_string(), wav_path.clone(),
+                        "-l".to_string(), "auto".to_string(),
                         "-otxt".to_string(),
                         "-osrt".to_string()
                     ];
