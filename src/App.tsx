@@ -10,14 +10,14 @@ type QueueItem = {
   progress?: number;
   filename?: string;
   error?: string;
-  format: 'video' | 'audio';
+  format: 'video' | 'audio' | 'texto';
   quality: 'standard' | 'max';
 };
 
 function App() {
   const [linksText, setLinksText] = useState('');
   const [destination, setDestination] = useState<string | null>(() => localStorage.getItem('last_destination'));
-  const [format, setFormat] = useState<'video' | 'audio'>('video');
+  const [format, setFormat] = useState<'video' | 'audio' | 'texto'>('video');
   const [quality, setQuality] = useState<'standard' | 'max'>('standard');
   const [isProcessing, setIsProcessing] = useState(false);
   const [queue, setQueue] = useState<QueueItem[]>([]);
@@ -208,6 +208,12 @@ function App() {
               className={`text-[11px] font-medium tracking-[0.2em] transition-all lowercase ${format === 'audio' ? 'text-glow' : 'text-[var(--text-muted)] hover:text-white'}`}
             >
               [ baixar áudio ]
+            </button>
+            <button 
+              onClick={() => setFormat('texto')}
+              className={`text-[11px] font-medium tracking-[0.2em] transition-all lowercase ${format === 'texto' ? 'text-glow' : 'text-[var(--text-muted)] hover:text-white'}`}
+            >
+              [ transcrever ]
             </button>
           </div>
           

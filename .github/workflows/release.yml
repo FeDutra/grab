@@ -30,6 +30,15 @@ jobs:
           Expand-Archive ffmpeg.zip -DestinationPath ffmpeg_extracted -Force
           $ffmpegPath = Get-ChildItem -Path ffmpeg_extracted -Filter "ffmpeg.exe" -Recurse | Select-Object -First 1
           Copy-Item $ffmpegPath.FullName -Destination src-tauri/resources/ffmpeg.exe -Force
+          
+          # Whisper CLI
+          Invoke-WebRequest -Uri https://github.com/ggml-org/whisper.cpp/releases/download/v1.9.1/whisper-blas-bin-x64.zip -OutFile whisper.zip
+          Expand-Archive whisper.zip -DestinationPath whisper_extracted -Force
+          $whisperPath = Get-ChildItem -Path whisper_extracted -Filter "main.exe" -Recurse | Select-Object -First 1
+          Copy-Item $whisperPath.FullName -Destination src-tauri/binaries/whisper-cli-x86_64-pc-windows-msvc.exe -Force
+          
+          # Model GGML Base
+          Invoke-WebRequest -Uri https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.bin -OutFile src-tauri/resources/ggml-base.bin
 
       - name: Instalar Dependências
         run: npm install

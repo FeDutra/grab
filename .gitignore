@@ -22,3 +22,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+src-tauri/resources/ggml-base.bin
+src-tauri/binaries/whisper-cli*

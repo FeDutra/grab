@@ -42,6 +42,8 @@ async fn start_download(app: AppHandle, state: State<'_, AppState>, id: String, 
         "--newline".to_string(), 
     ];
 
+    let mut model_path_opt = None;
+
     if let Ok(resource_dir) = app.path().resource_dir() {
         #[cfg(target_os = "windows")]
         let ffmpeg_name = "ffmpeg.exe";
@@ -62,9 +64,14 @@ async fn start_download(app: AppHandle, state: State<'_, AppState>, id: String, 
         if let Some(path) = ffmpeg_path {
             args.push("--ffmpeg-location".to_string());
             args.push(path.to_string_lossy().to_string());
-            println!("FFmpeg found at: {:?}", path);
-        } else {
-            println!("FFmpeg NOT FOUND in resource_dir: {:?}", resource_dir);
+        }
+
+        let model1 = resource_dir.join("ggml-base.bin");
+        let model2 = resource_dir.join("resources").join("ggml-base.bin");
+        if model1.exists() {
+            model_path_opt = Some(model1.to_string_lossy().to_string());
+        } else if model2.exists() {
+            model_path_opt = Some(model2.to_string_lossy().to_string());
         }
     }
     
@@ -74,8 +81,14 @@ async fn start_download(app: AppHandle, state: State<'_, AppState>, id: String, 
         args.push("mp3".to_string());
         if quality == "max" {
             args.push("--audio-quality".to_string());
-            args.push("0".to_string()); // 0 is best
+            args.push("0".to_string());
         }
+    } else if format == "texto" {
+        args.push("-x".to_string());
+        args.push("--audio-format".to_string());
+        args.push("wav".to_string());
+        args.push("--postprocessor-args".to_string());
+        args.push("-ar 16000 -ac 1 -c:a pcm_s16le".to_string());
     } else {
         if quality == "max" {
             args.push("-f".to_string());
@@ -101,51 +114,52 @@ async fn start_download(app: AppHandle, state: State<'_, AppState>, id: String, 
 
     let id_clone = id.clone();
     let children_ref = state.children.clone();
+    let format_clone = format.clone();
+    let app_clone = app.clone();
 
     tauri::async_runtime::spawn(async move {
         let mut success = false;
         let mut err_msg = String::new();
         let mut current_filename = None;
         let mut last_progress = 0.0;
+        let mut final_wav_path = None;
 
         while let Some(event) = rx.recv().await {
             if let CommandEvent::Stdout(line) = event {
                 let line_str = String::from_utf8_lossy(&line);
                 let line_str = line_str.trim();
 
-                // Detect filename
-                if line_str.starts_with("[download] Destination:") {
+                if line_str.starts_with("[download] Destination:") || line_str.starts_with("[ExtractAudio] Destination:") {
                     let parts: Vec<&str> = line_str.split("Destination:").collect();
                     if parts.len() > 1 {
                         let path = parts[1].trim();
+                        if path.ends_with(".wav") {
+                            final_wav_path = Some(path.to_string());
+                        }
                         if let Some(file_name) = std::path::Path::new(path).file_name() {
                             current_filename = Some(file_name.to_string_lossy().to_string());
                         }
                     }
                 } else if line_str.starts_with("[download]") && line_str.contains("%") {
-                    // Extract progress like "  4.3%"
                     if let Some(pct_start) = line_str.find(']') {
                         let after_bracket = &line_str[pct_start + 1..];
                         if let Some(pct_end) = after_bracket.find('%') {
                             let pct_str = &after_bracket[..pct_end].trim();
                             if let Ok(pct) = pct_str.parse::<f32>() {
                                 last_progress = pct;
-                                let _ = app.emit("download-progress", DownloadProgress {
+                                let _ = app_clone.emit("download-progress", DownloadProgress {
                                     id: id_clone.clone(),
                                     status: "processing".into(),
-                                    progress: Some(pct),
+                                    progress: Some(if format_clone == "texto" { pct * 0.5 } else { pct }),
                                     filename: current_filename.clone(),
                                     error: None,
                                 });
-                            } else { println!("yt-dlp stdout: {}", line_str); }
-                        } else { println!("yt-dlp stdout: {}", line_str); }
-                    } else { println!("yt-dlp stdout: {}", line_str); }
-                } else {
-                    println!("yt-dlp stdout: {}", line_str);
+                            }
+                        }
+                    }
                 }
             } else if let CommandEvent::Stderr(line) = event {
                 let line_str = String::from_utf8_lossy(&line);
-                println!("yt-dlp stderr: {}", line_str.trim());
                 err_msg = line_str.to_string();
             } else if let CommandEvent::Terminated(payload) = event {
                 success = payload.code == Some(0);
@@ -154,8 +168,47 @@ async fn start_download(app: AppHandle, state: State<'_, AppState>, id: String, 
 
         children_ref.lock().unwrap().remove(&id_clone);
 
+        if success && format_clone == "texto" {
+            let _ = app_clone.emit("download-progress", DownloadProgress {
+                id: id_clone.clone(),
+                status: "processing".into(),
+                progress: Some(75.0),
+                filename: current_filename.clone().map(|f| format!("Transcrevendo: {}", f)),
+                error: None,
+            });
+
+            if let (Some(wav_path), Some(model_path)) = (final_wav_path.clone(), model_path_opt) {
+                if let Ok(whisper_cmd) = app_clone.shell().sidecar("whisper-cli") {
+                    let w_args = vec![
+                        "-m".to_string(), model_path,
+                        "-f".to_string(), wav_path.clone(),
+                        "-otxt".to_string(),
+                        "-osrt".to_string()
+                    ];
+                    
+                    if let Ok(output) = whisper_cmd.args(w_args).output().await {
+                        if output.status.success() {
+                            let _ = std::fs::remove_file(&wav_path); // delete the temp wav
+                        } else {
+                            success = false;
+                            err_msg = String::from_utf8_lossy(&output.stderr).to_string();
+                        }
+                    } else {
+                        success = false;
+                        err_msg = "Failed to run whisper-cli".into();
+                    }
+                } else {
+                    success = false;
+                    err_msg = "whisper-cli not found".into();
+                }
+            } else {
+                success = false;
+                err_msg = "Missing wav file or model".into();
+            }
+        }
+
         let final_status = if success { "completed" } else { "failed" };
-        let _ = app.emit("download-progress", DownloadProgress {
+        let _ = app_clone.emit("download-progress", DownloadProgress {
             id: id_clone.clone(),
             status: final_status.into(),
             progress: if success { Some(100.0) } else { Some(last_progress) },
